@@ -10,18 +10,16 @@ public class Evento {
     private LocalDateTime fechaYHora;
     private String ubicacion;
     private int capacidad;
-    private Chef chef;
+    private Chef chefACargo;
 
     // constructores
-    public Evento(String nombre, String descripcion, LocalDateTime fechaYHora, String ubicacion, int capacidad,
-            Chef chef) {
+    public Evento(String nombre, String descripcion, LocalDateTime fechaYHora, String ubicacion, int capacidad) {
         this.id = UUID.randomUUID();
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.fechaYHora = fechaYHora;
         this.ubicacion = ubicacion;
         this.capacidad = capacidad;
-        this.chef = chef;
     }
 
     // getters&setters
@@ -73,11 +71,11 @@ public class Evento {
         this.capacidad = capacidad;
     }
 
-    public Chef getChef() {
-        return chef;
+    public Chef getChefACargo() {
+        return chefACargo;
     }
 
-    public void setChef(Chef chef) {
-        this.chef = chef;
+    public void setChefACargo(Chef chefACargo) {
+        this.chefACargo = chefACargo;
     }
 }

@@ -8,7 +8,7 @@ public class Participante {
     private int dni;
     private String nombre;
     private List<Comida> intereses;
-    private List<Evento> eventos;
+    private List<Evento> eventosHistorial; // historial de eventos que ha participado
 
     // constructores
     public Participante(int dni, String nombre, List<Comida> intereses) {
@@ -42,11 +42,11 @@ public class Participante {
         this.intereses = intereses;
     }
 
-    public List<Evento> getEventos() {
-        return eventos;
+    public List<Evento> getEventosHistorial() {
+        return eventosHistorial;
     }
 
-    public void setEventos(List<Evento> eventos) {
-        this.eventos = eventos;
+    public void setEventosHistorial(List<Evento> eventosHistorial) {
+        this.eventosHistorial = eventosHistorial;
     }
 }

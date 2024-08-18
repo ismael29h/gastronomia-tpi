@@ -8,7 +8,7 @@ public class Chef {
     private int dni;
     private String nombre;
     private Especialidad especialidad;
-    private List<Evento> eventos;
+    private List<Evento> eventosACargo; // eventos que está a cargo un chef
 
     // constructores
     public Chef(int dni, String nombre, Especialidad especialidad) {
@@ -42,11 +42,11 @@ public class Chef {
         this.especialidad = especialidad;
     }
 
-    public List<Evento> getEventos() {
-        return eventos;
+    public List<Evento> getEventosACargo() {
+        return eventosACargo;
     }
 
-    public void setEventos(List<Evento> eventos) {
-        this.eventos = eventos;
+    public void setEventosACargo(List<Evento> eventosACargo) {
+        this.eventosACargo = eventosACargo;
     }
 }
