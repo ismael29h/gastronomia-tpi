@@ -70,8 +70,9 @@ public class EventoServiceImpl implements EventoService {
         return false;
     }
 
+    @Override
     /** Busca y devuelve un evento a partir de su ID */
-    private Evento buscarEvento() {
+    public Evento buscarEvento() {
         System.out.print("Ingrese el ID del evento: ");
         UUID id = UUID.fromString(sc.nextLine());
 

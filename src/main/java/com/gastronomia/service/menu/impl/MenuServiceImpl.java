@@ -33,7 +33,11 @@ public class MenuServiceImpl implements MenuService {
             System.out.println("1. Gestion de chefs");
             System.out.println("2. Gestión de participantes");
             System.out.println("3. Gestion de eventos");
-            System.out.println("4. Salir de la aplicación");
+            System.out.println("4. <Salir de la aplicación>");
+
+            // pruebas
+            System.out.println("9.......");
+
             System.out.print("> ");
 
             opc = sc.nextInt();
@@ -41,16 +45,20 @@ public class MenuServiceImpl implements MenuService {
 
             switch (opc) {
                 case 1:
-                    // gestion de chefs
+                    gestionChef();
                     break;
                 case 2:
-                    // gestion de participantes
+                    gestionParticipante();
                     break;
                 case 3:
                     gestionEvento();
                     break;
                 case 4:
                     System.out.println("\n<<<APLICACION FINALIZADA>>>");
+                    break;
+                case 9:
+                    // PRUEBAS
+                    participanteService.nuevoParticipante();
                     break;
                 default:
                     System.out.println("\n<<<OPCION INCORRECTA>>>");
@@ -61,20 +69,22 @@ public class MenuServiceImpl implements MenuService {
 
     }
 
+    /** GESTIONAR EVENTOS */
     private void gestionEvento() {
         int opc;
         do {
             System.out.println("----------------------------------------------------------");
             System.out.println("<<<MENU DE GESTION DE EVENTOS>>>\n");
             System.out.println("1. Crear evento");
-            System.out.println("2. Volver hacia atrás");
+            System.out.println("2. <Volver hacia atrás>");
+            System.out.print("> ");
 
             opc = sc.nextInt();
             sc.nextLine();
 
             switch (opc) {
                 case 1:
-                    eventoService.crearEvento(chefService);
+                    eventoService.crearEvento();
                     break;
                 case 2:
                     System.out.println("\n<<<SALIENDO DE GESTION DE EVENTOS>>>");
@@ -84,5 +94,40 @@ public class MenuServiceImpl implements MenuService {
                     break;
             }
         } while (opc != 2);
+    }
+
+    /** GESTIONAR CHEFS */
+    private void gestionChef() {
+        int opc;
+        do {
+            System.out.println("----------------------------------------------------------");
+            System.out.println("<<<MENU DE GESTION DE CHEF>>>\n");
+            System.out.println("1. Nuevo chef en la organización");
+            System.out.println("2. Asignar un chef a un evento");
+            System.out.println("3. <Volver hacia atrás>");
+            System.out.print("> ");
+
+            opc = sc.nextInt();
+            sc.nextLine();
+
+            switch (opc) {
+                case 1:
+                    chefService.nuevoChef();
+                    break;
+                case 2:
+                    chefService.asignarChef(eventoService.buscarEvento());
+                    break;
+                case 3:
+                    System.out.println("\n<<<SALIENDO DE GESTION DE CHEF>>>");
+                    break;
+                default:
+                    System.out.println("\n<<<OPCION INCORRECTA>>>");
+                    break;
+            }
+        } while (opc != 3);
+    }
+
+    private void gestionParticipante() {
+
     }
 }

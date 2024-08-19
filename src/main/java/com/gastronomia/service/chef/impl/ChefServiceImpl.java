@@ -22,7 +22,19 @@ public class ChefServiceImpl implements ChefService {
     @Override
     /** Asigna un chef a un evento */
     public void asignarChef(Evento evento) {
-        // TODO Auto-generated method stub
+        Chef chef = buscarChef();
+
+        if (chef == null) {
+            System.out.println("\n<<<NO SE ENCUENTRA EL CHEF>>>\n");
+            return;
+        }
+
+        if (evento.getChefACargo() != null) {
+            System.out.println("\n<<El chef a cargo será reemplazado por el actual>>\n");
+        }
+
+        evento.setChefACargo(chef);
+        System.out.println("\n<<<CHEF ASIGNADO AL EVENTO CON EXITO>>>\n");
 
     }
 
