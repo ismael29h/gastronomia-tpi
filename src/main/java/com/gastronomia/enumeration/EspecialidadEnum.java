@@ -1,6 +1,6 @@
 package com.gastronomia.enumeration;
 
-public enum Especialidad {
+public enum EspecialidadEnum {
     PASTELERIA,
     COCINA_INTERNACIONAL
 }

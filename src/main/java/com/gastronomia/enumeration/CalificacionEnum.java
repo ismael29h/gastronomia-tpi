@@ -1,6 +1,6 @@
 package com.gastronomia.enumeration;
 
-public enum Calificacion {
+public enum CalificacionEnum {
     UNA_ESTRELLA,
     DOS_ESTRELLAS,
     TRES_ESTRELLAS,

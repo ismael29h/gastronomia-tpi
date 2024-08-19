@@ -2,17 +2,17 @@ package com.gastronomia.domain;
 
 import java.util.UUID;
 
-import com.gastronomia.enumeration.Calificacion;
+import com.gastronomia.enumeration.CalificacionEnum;
 
 public class Reseña {
     private UUID id;
     private Evento evento;
     private Participante participante;
-    private Calificacion calificacion;
+    private CalificacionEnum calificacion;
     private String comentario;
 
     // constructores
-    public Reseña(Evento evento, Participante participante, Calificacion calificacion, String comentario) {
+    public Reseña(Evento evento, Participante participante, CalificacionEnum calificacion, String comentario) {
         this.id = UUID.randomUUID();
         this.evento = evento;
         this.participante = participante;
@@ -45,11 +45,11 @@ public class Reseña {
         this.participante = participante;
     }
 
-    public Calificacion getCalificacion() {
+    public CalificacionEnum getCalificacion() {
         return calificacion;
     }
 
-    public void setCalificacion(Calificacion calificacion) {
+    public void setCalificacion(CalificacionEnum calificacion) {
         this.calificacion = calificacion;
     }
 

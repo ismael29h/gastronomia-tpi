@@ -2,16 +2,16 @@ package com.gastronomia.domain;
 
 import java.util.List;
 
-import com.gastronomia.enumeration.Especialidad;
+import com.gastronomia.enumeration.EspecialidadEnum;
 
 public class Chef {
     private int dni;
     private String nombre;
-    private Especialidad especialidad;
+    private EspecialidadEnum especialidad;
     private List<Evento> eventosACargo; // eventos que está a cargo un chef
 
     // constructores
-    public Chef(int dni, String nombre, Especialidad especialidad) {
+    public Chef(int dni, String nombre, EspecialidadEnum especialidad) {
         this.dni = dni;
         this.nombre = nombre;
         this.especialidad = especialidad;
@@ -34,11 +34,11 @@ public class Chef {
         this.nombre = nombre;
     }
 
-    public Especialidad getEspecialidad() {
+    public EspecialidadEnum getEspecialidad() {
         return especialidad;
     }
 
-    public void setEspecialidad(Especialidad especialidad) {
+    public void setEspecialidad(EspecialidadEnum especialidad) {
         this.especialidad = especialidad;
     }
 

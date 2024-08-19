@@ -2,16 +2,16 @@ package com.gastronomia.domain;
 
 import java.util.List;
 
-import com.gastronomia.enumeration.Comida;
+import com.gastronomia.enumeration.ComidaEnum;
 
 public class Participante {
     private int dni;
     private String nombre;
-    private List<Comida> intereses;
+    private List<ComidaEnum> intereses;
     private List<Evento> eventosHistorial; // historial de eventos que ha participado
 
     // constructores
-    public Participante(int dni, String nombre, List<Comida> intereses) {
+    public Participante(int dni, String nombre, List<ComidaEnum> intereses) {
         this.dni = dni;
         this.nombre = nombre;
         this.intereses = intereses;
@@ -34,11 +34,11 @@ public class Participante {
         this.nombre = nombre;
     }
 
-    public List<Comida> getIntereses() {
+    public List<ComidaEnum> getIntereses() {
         return intereses;
     }
 
-    public void setIntereses(List<Comida> intereses) {
+    public void setIntereses(List<ComidaEnum> intereses) {
         this.intereses = intereses;
     }
 

@@ -1,6 +1,6 @@
 package com.gastronomia.enumeration;
 
-public enum Comida {
+public enum ComidaEnum {
     ITALIANA,
     MEXICANA,
     VEGANA
