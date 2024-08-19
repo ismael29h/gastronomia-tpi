@@ -7,8 +7,6 @@ import com.gastronomia.domain.Reseña;
 public interface ParticipanteService {
     public void nuevoParticipante();
 
-    public Participante buscarParticipante();
-
     public void inscribirParticipante(Evento evento);
 
     public Reseña crearReseña(Evento evento, Participante participante);

@@ -8,7 +8,6 @@ import java.util.Scanner;
 import java.util.UUID;
 
 import com.gastronomia.domain.Evento;
-import com.gastronomia.service.chef.ChefService;
 import com.gastronomia.service.evento.EventoService;
 import com.gastronomia.service.fecha.FechaService;
 
@@ -19,20 +18,6 @@ public class EventoServiceImpl implements EventoService {
     public EventoServiceImpl(Scanner sc) {
         this.sc = sc;
         this.eventos = new ArrayList<Evento>();
-    }
-
-    @Override
-    public Evento buscarEvento() {
-        System.out.print("Ingrese el ID del evento: ");
-        UUID id = UUID.fromString(sc.nextLine());
-
-        for (Evento evento : eventos) {
-            if (evento.getId().equals(id)) {
-                return evento;
-            }
-        }
-
-        return null;
     }
 
     @Override
@@ -76,4 +61,26 @@ public class EventoServiceImpl implements EventoService {
 
     }
 
+    private boolean existeEvento(UUID id) {
+        for (Evento evento : eventos) {
+            if (evento.getId().equals(id)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /** Busca y devuelve un evento a partir de su ID */
+    private Evento buscarEvento() {
+        System.out.print("Ingrese el ID del evento: ");
+        UUID id = UUID.fromString(sc.nextLine());
+
+        for (Evento evento : eventos) {
+            if (evento.getId().equals(id)) {
+                return evento;
+            }
+        }
+
+        return null;
+    }
 }
