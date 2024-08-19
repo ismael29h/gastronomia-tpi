@@ -25,7 +25,15 @@ public class ParticipanteServiceImpl implements ParticipanteService {
 
     @Override
     public Participante buscarParticipante() {
-        // TODO Auto-generated method stub
+        System.out.print("Ingrese el DNI del participante: ");
+        int dni = sc.nextInt();
+        sc.nextLine();
+
+        for (Participante participante : participantes) {
+            if (participante.getDni() == dni) {
+                return participante;
+            }
+        }
         return null;
     }
 

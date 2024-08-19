@@ -23,7 +23,15 @@ public class ChefServiceImpl implements ChefService {
 
     @Override
     public Chef buscarChef() {
-        // TODO Auto-generated method stub
+        System.out.print("Ingrese el DNI del chef: ");
+        int dni = sc.nextInt();
+        sc.nextLine();
+
+        for (Chef chef : chefs) {
+            if (chef.getDni() == dni) {
+                return chef;
+            }
+        }
         return null;
     }
 

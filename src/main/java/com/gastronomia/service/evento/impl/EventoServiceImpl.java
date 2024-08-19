@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.UUID;
 
 import com.gastronomia.domain.Evento;
 import com.gastronomia.service.chef.ChefService;
@@ -22,12 +23,20 @@ public class EventoServiceImpl implements EventoService {
 
     @Override
     public Evento buscarEvento() {
-        // TODO Auto-generated method stub
+        System.out.print("Ingrese el ID del evento: ");
+        UUID id = UUID.fromString(sc.nextLine());
+
+        for (Evento evento : eventos) {
+            if (evento.getId().equals(id)) {
+                return evento;
+            }
+        }
+
         return null;
     }
 
     @Override
-    public void crearEvento(ChefService chefService) {
+    public void crearEvento() {
         System.out.println("----------------------------------------------------------");
         System.out.println("<<<CREACION DE EVENTO>>>\n");
 
