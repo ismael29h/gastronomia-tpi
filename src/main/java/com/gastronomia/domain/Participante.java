@@ -49,4 +49,19 @@ public class Participante {
     public void setEventosHistorial(List<Evento> eventosHistorial) {
         this.eventosHistorial = eventosHistorial;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Participante) {
+            Participante otroParticipante = (Participante) obj;
+            return dni == otroParticipante.getDni();
+        }
+
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return Integer.hashCode(dni);
+    }
 }

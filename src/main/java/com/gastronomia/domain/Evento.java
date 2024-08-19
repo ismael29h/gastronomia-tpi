@@ -78,4 +78,19 @@ public class Evento {
     public void setChefACargo(Chef chefACargo) {
         this.chefACargo = chefACargo;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Evento) {
+            Evento otroEvento = (Evento) obj;
+            return id != null && id.equals(otroEvento.getId());
+        }
+
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0; // se usa el hashcode del obj UUIDs
+    }
 }

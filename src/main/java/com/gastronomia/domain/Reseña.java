@@ -61,4 +61,17 @@ public class Reseña {
         this.comentario = comentario;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Reseña) {
+            Reseña otraReseña = (Reseña) obj;
+            return id != null && id.equals(otraReseña.getId());
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
+    }
 }

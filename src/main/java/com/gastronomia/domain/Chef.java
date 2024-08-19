@@ -49,4 +49,19 @@ public class Chef {
     public void setEventosACargo(List<Evento> eventosACargo) {
         this.eventosACargo = eventosACargo;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Chef) {
+            Chef otroChef = (Chef) obj; // casting
+            return dni == otroChef.getDni();
+        }
+
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return Integer.hashCode(dni); // el mismo dni es usado cómo hash
+    }
 }
