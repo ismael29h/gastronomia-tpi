@@ -6,6 +6,26 @@ import java.time.LocalTime;
 import java.util.Scanner;
 
 public class FechaService {
+    /** Devuelve un String con la fecha especificada */
+    public static String mostrarFecha(LocalDate fechaYHora) {
+        StringBuilder sb = new StringBuilder();
+
+        return sb.append(fechaYHora.getDayOfMonth() + "-")
+                .append(fechaYHora.getMonthValue() + "-")
+                .append(fechaYHora.getYear()).toString();
+    }
+
+    /** Devuelve un String con la fecha y hora especificada */
+    public static String mostrarFechaYHora(LocalDateTime fechaYHora) {
+        StringBuilder sb = new StringBuilder();
+
+        return sb.append(fechaYHora.getDayOfMonth() + "-")
+                .append(fechaYHora.getMonthValue() + "-")
+                .append(fechaYHora.getYear() + " ")
+                .append(fechaYHora.getHour() + ":")
+                .append(fechaYHora.getMinute()).toString();
+    }
+
     /** Verifica que sean la misma fecha aunque con diferente horario */
     public static boolean esMismaFecha(LocalDate fecha, LocalDateTime fechaYHora) {
         if (fecha.getDayOfMonth() == fechaYHora.getDayOfMonth()

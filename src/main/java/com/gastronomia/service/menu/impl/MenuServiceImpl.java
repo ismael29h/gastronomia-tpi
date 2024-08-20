@@ -78,7 +78,8 @@ public class MenuServiceImpl implements MenuService {
             System.out.println("<<<MENU DE GESTION DE EVENTOS>>>\n");
             System.out.println("1. Crear evento");
             System.out.println("2. Listar eventos de una día");
-            System.out.println("3. <Volver hacia atrás>");
+            System.out.println("3. Exportar eventos que estén repletos");
+            System.out.println("4. <Volver hacia atrás>");
             System.out.print("> ");
 
             opc = sc.nextInt();
@@ -92,13 +93,16 @@ public class MenuServiceImpl implements MenuService {
                     eventoService.listarEventos(FechaService.solicitarFecha(sc));
                     break;
                 case 3:
+                    eventoService.exportEventosLlenos(FechaService.solicitarFecha(sc));
+                    break;
+                case 4:
                     System.out.println("\n<<<SALIENDO DE GESTION DE EVENTOS>>>");
                     break;
                 default:
                     System.out.println("\n<<<OPCION INCORRECTA>>>");
                     break;
             }
-        } while (opc != 3);
+        } while (opc != 4);
     }
 
     /** GESTIONAR CHEFS */
