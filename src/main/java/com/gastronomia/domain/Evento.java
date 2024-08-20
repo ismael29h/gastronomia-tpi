@@ -11,6 +11,7 @@ public class Evento {
     private String ubicacion;
     private int capacidad;
     private Chef chefACargo;
+    private int numParticipantes;
 
     // constructores
     public Evento(String nombre, String descripcion, LocalDateTime fechaYHora, String ubicacion, int capacidad) {
@@ -77,6 +78,19 @@ public class Evento {
 
     public void setChefACargo(Chef chefACargo) {
         this.chefACargo = chefACargo;
+    }
+
+    public int getNumParticipantes() {
+        return numParticipantes;
+    }
+
+    public void setNumParticipantes(int numParticipantes) {
+        this.numParticipantes = numParticipantes;
+    }
+
+    /** Incrementa el número de participantes en 1 */
+    public void incNumParticipantes() {
+        this.numParticipantes += 1;
     }
 
     @Override

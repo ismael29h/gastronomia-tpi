@@ -1,5 +1,6 @@
 package com.gastronomia.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.gastronomia.enumeration.ComidaEnum;
@@ -8,13 +9,14 @@ public class Participante {
     private int dni;
     private String nombre;
     private List<ComidaEnum> intereses;
-    private List<Evento> eventosHistorial; // historial de eventos que ha participado
+    private List<Evento> eventosHistorial; // historial de eventos que ha participado o participa actualmente
 
     // constructores
     public Participante(int dni, String nombre, List<ComidaEnum> intereses) {
         this.dni = dni;
         this.nombre = nombre;
         this.intereses = intereses;
+        this.eventosHistorial = new ArrayList<Evento>();
     }
 
     // getters&setters

@@ -127,7 +127,35 @@ public class MenuServiceImpl implements MenuService {
         } while (opc != 3);
     }
 
+    /** GESTIONAR PARTICIPANTES */
     private void gestionParticipante() {
+        int opc;
+        do {
+            System.out.println("----------------------------------------------------------");
+            System.out.println("<<<MENU DE GESTION DE PARTICIPANTES>>>\n");
+            System.out.println("1. Nuevo participante en la organización");
+            System.out.println("2. Asignar un participante a un evento");
+            System.out.println("3. <Volver hacia atrás>");
+            System.out.print("> ");
 
+            opc = sc.nextInt();
+            sc.nextLine();
+
+            switch (opc) {
+                case 1:
+                    participanteService.nuevoParticipante();
+                    break;
+                case 2:
+                    participanteService.inscribirParticipante(eventoService.buscarEvento());
+                    break;
+                case 3:
+                    System.out.println("\n<<<SALIENDO DE GESTION DE PARTICIPANTES>>>");
+                    break;
+                default:
+                    System.out.println("\n<<<OPCION INCORRECTA>>>");
+                    break;
+            }
+        } while (opc != 3);
     }
+
 }

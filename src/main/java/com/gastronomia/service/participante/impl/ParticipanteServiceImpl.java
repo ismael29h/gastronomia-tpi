@@ -29,11 +29,36 @@ public class ParticipanteServiceImpl implements ParticipanteService {
 
     @Override
     public void inscribirParticipante(Evento evento) {
-        // TODO Auto-generated method stub
+        // comprobar si el evento sobrepasó sus límites
+        if (evento.getNumParticipantes() >= evento.getCapacidad()) {
+            System.out.println("\n<<<EVENTO LLENO>>>\n");
+            return;
+        }
+
+        Participante participante = buscarParticipante();
+        if (participante == null) {
+            System.out.println("\n<<<NO SE ENCUENTRA EL PARTICIPANTE>>>\n");
+            return;
+        }
+
+        // comprobar si el participante ya está en ese evento
+        for (Evento eventoEnHistorial : participante.getEventosHistorial()) {
+            if (eventoEnHistorial.equals(evento)) {
+                System.out.println("\n<<<EL PARTICIPANTE YA ESTÁ EN EL EVENTO>>>\n");
+                return;
+            }
+        }
+
+        // registrar participant (el evento no lleva listas de sus participantes)
+        participante.getEventosHistorial().add(evento);
+        evento.incNumParticipantes();
+
+        System.out.println("\n<<<EL PARTICIPANTE RECIBE SU INVITACIÓN AL EVENTO>>>\n");
 
     }
 
     @Override
+    /** Crea un nuevo participante en la organización */
     public void nuevoParticipante() {
         System.out.println("----------------------------------------------------------");
         System.out.println("<<<NUEVO PARTICIPANTE>>>\n");
@@ -55,6 +80,7 @@ public class ParticipanteServiceImpl implements ParticipanteService {
 
     }
 
+    /** Comprueba si existe un participante según su dni */
     private boolean existeParticipante(int dni) {
         for (Participante participante : participantes) {
             if (participante.getDni() == dni) {
@@ -64,7 +90,7 @@ public class ParticipanteServiceImpl implements ParticipanteService {
         return false;
     }
 
-    /** Busca y devuelve un participante del total */
+    /** Solicita, busca y devuelve un participante del total */
     private Participante buscarParticipante() {
         System.out.print("Ingrese el DNI del participante: ");
         int dni = sc.nextInt();

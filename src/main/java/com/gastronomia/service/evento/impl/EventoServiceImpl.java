@@ -43,10 +43,13 @@ public class EventoServiceImpl implements EventoService {
         int capacidad = sc.nextInt();
         sc.nextLine();
 
+        Evento evento = new Evento(nombre, descripcion, fechaYHora, ubicacion, capacidad);
+
         // guardar el evento (el chef se elige en la gestión de chefs)
-        eventos.add(new Evento(nombre, descripcion, fechaYHora, ubicacion, capacidad));
+        eventos.add(evento);
 
         System.out.println("\n<<<EVENTO CREADO CON EXITO>>>");
+        System.out.println("\nID: " + evento.getId().toString());
     }
 
     @Override
