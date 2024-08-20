@@ -6,6 +6,18 @@ import java.time.LocalTime;
 import java.util.Scanner;
 
 public class FechaService {
+    /** Verifica que sean la misma fecha aunque con diferente horario */
+    public static boolean esMismaFecha(LocalDate fecha, LocalDateTime fechaYHora) {
+        if (fecha.getDayOfMonth() == fechaYHora.getDayOfMonth()
+                && fecha.getMonthValue() == fechaYHora.getMonthValue()
+                && fecha.getYear() == fechaYHora.getYear()) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /** Crea un obj LocalDate luego de solicitar dia,mes y año */
     public static LocalDate solicitarFecha(Scanner sc) {
         System.out.print("Ingrese el año: ");
         int año = sc.nextInt();
@@ -22,6 +34,7 @@ public class FechaService {
         return LocalDate.of(año, mes, dia);
     };
 
+    /** Crea un obj LocalDateTime luego de solicitar lo necesario */
     public static LocalDateTime solicitarFechaYHora(Scanner sc) {
         LocalDate fecha = solicitarFecha(sc);
 

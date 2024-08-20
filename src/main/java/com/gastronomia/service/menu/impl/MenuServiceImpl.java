@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 import com.gastronomia.service.chef.ChefService;
 import com.gastronomia.service.evento.EventoService;
+import com.gastronomia.service.fecha.FechaService;
 import com.gastronomia.service.menu.MenuService;
 import com.gastronomia.service.participante.ParticipanteService;
 
@@ -76,7 +77,8 @@ public class MenuServiceImpl implements MenuService {
             System.out.println("----------------------------------------------------------");
             System.out.println("<<<MENU DE GESTION DE EVENTOS>>>\n");
             System.out.println("1. Crear evento");
-            System.out.println("2. <Volver hacia atrás>");
+            System.out.println("2. Listar eventos de una día");
+            System.out.println("3. <Volver hacia atrás>");
             System.out.print("> ");
 
             opc = sc.nextInt();
@@ -87,13 +89,16 @@ public class MenuServiceImpl implements MenuService {
                     eventoService.crearEvento();
                     break;
                 case 2:
+                    eventoService.listarEventos(FechaService.solicitarFecha(sc));
+                    break;
+                case 3:
                     System.out.println("\n<<<SALIENDO DE GESTION DE EVENTOS>>>");
                     break;
                 default:
                     System.out.println("\n<<<OPCION INCORRECTA>>>");
                     break;
             }
-        } while (opc != 2);
+        } while (opc != 3);
     }
 
     /** GESTIONAR CHEFS */

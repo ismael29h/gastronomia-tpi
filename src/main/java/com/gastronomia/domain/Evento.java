@@ -21,6 +21,7 @@ public class Evento {
         this.fechaYHora = fechaYHora;
         this.ubicacion = ubicacion;
         this.capacidad = capacidad;
+        this.chefACargo = null;
     }
 
     // getters&setters
@@ -91,6 +92,36 @@ public class Evento {
     /** Incrementa el número de participantes en 1 */
     public void incNumParticipantes() {
         this.numParticipantes += 1;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+
+        String chefString;
+        if (chefACargo != null) {
+            chefString = "-> A cargo del evento: " + chefACargo.getNombre() + "(DNI: " + chefACargo.getDni()
+                    + ")\n";
+        } else {
+            chefString = "";
+        }
+
+        return sb.append("----------------------------------------------------------\n")
+                .append("-> Nombre del evento: " + nombre + "\n")
+                .append("-> ID: " + id + "\n")
+                .append(chefString)
+                .append("-> Descripción: " + descripcion + "\n")
+                .append("-> Lugar: " + ubicacion + "\n")
+                .append("-> Capacidad máxima: " + capacidad + "\n")
+                .append("-> Fecha: "
+                        + fechaYHora.getDayOfMonth() + "/"
+                        + fechaYHora.getMonthValue() + "/"
+                        + fechaYHora.getYear() + "\n")
+                .append("-> Hora: "
+                        + fechaYHora.getHour() + ":"
+                        + fechaYHora.getMinute())
+                + "\n"
+                        .toString();
     }
 
     @Override

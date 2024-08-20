@@ -53,15 +53,27 @@ public class EventoServiceImpl implements EventoService {
     }
 
     @Override
+
     public void exportEventosLlenos(LocalDate fecha) {
-        // TODO Auto-generated method stub
 
     }
 
+    /** Da una lista de evento en una fecha determinada */
     @Override
     public void listarEventos(LocalDate fecha) {
-        // TODO Auto-generated method stub
+        boolean noHayEventos = true;
 
+        System.out.println("Buscando eventos...\n");
+        for (Evento evento : eventos) {
+            if (FechaService.esMismaFecha(fecha, evento.getFechaYHora())) {
+                System.out.println(evento.toString());
+                noHayEventos = false;
+            }
+        }
+
+        if (noHayEventos) {
+            System.out.println("\n<<<NO HAY EVENTOS EN LA FECHA INDICADA>>>\n");
+        }
     }
 
     private boolean existeEvento(UUID id) {
