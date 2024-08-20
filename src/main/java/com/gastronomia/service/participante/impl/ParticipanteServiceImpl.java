@@ -7,6 +7,7 @@ import java.util.Scanner;
 import com.gastronomia.domain.Evento;
 import com.gastronomia.domain.Participante;
 import com.gastronomia.domain.Reseña;
+import com.gastronomia.enumeration.CalificacionEnum;
 import com.gastronomia.enumeration.ComidaEnum;
 import com.gastronomia.service.participante.ParticipanteService;
 
@@ -22,13 +23,53 @@ public class ParticipanteServiceImpl implements ParticipanteService {
     }
 
     @Override
-    public Reseña crearReseña(Evento evento, Participante participante) {
-        // TODO Auto-generated method stub
-        return null;
+    public void crearReseña(Evento evento) {
+        if (evento == null) {
+            System.out.println("\n<<<NO EXISTE EL EVENTO>>>\n");
+            return;
+        }
+
+        Participante participante = buscarParticipante();
+
+        if (participante == null) {
+            System.out.println("\n<<<NO EXISTE EL PARTICIPANTE>>>\n");
+            return;
+        }
+
+        if (!existeParticipanteEnEvento(participante, evento)) {
+            System.out.println("\n<<<PARTICIPANTE NO HA ASISTIDO AL EVENTO>>>\n");
+            return;
+        }
+
+        if (yaExisteReseña(evento, participante)) {
+            System.out.println("\n<<<YA EXISTE UNA RESEÑA CON ESE PARTICIPANTE Y EVENTO>>>\n");
+            return;
+        }
+
+        CalificacionEnum calificacion = CalificacionEnum.elegircalificacion(sc);
+
+        if (calificacion == null) {
+            calificacion = CalificacionEnum.TRES_ESTRELLAS;// valor por defecto
+        }
+
+        System.out.print("<Escriba un comentario a continuación>\n> ");
+
+        String comentario = sc.nextLine();
+        sc.nextLine();
+
+        Reseña reseña = new Reseña(evento, participante, calificacion, comentario);
+
+        reseñas.add(reseña);
+
+        System.out.println("\n<<<RESEÑA CREADA CON EXITO>>>\n");
     }
 
     @Override
     public void inscribirParticipante(Evento evento) {
+        if (evento == null) {
+            System.out.println("\n<<<NO EXISTE EL EVENTO>>>\n");
+            return;
+        }
         // comprobar si el evento sobrepasó sus límites
         if (evento.getNumParticipantes() >= evento.getCapacidad()) {
             System.out.println("\n<<<EVENTO LLENO>>>\n");
@@ -41,12 +82,9 @@ public class ParticipanteServiceImpl implements ParticipanteService {
             return;
         }
 
-        // comprobar si el participante ya está en ese evento
-        for (Evento eventoEnHistorial : participante.getEventosHistorial()) {
-            if (eventoEnHistorial.equals(evento)) {
-                System.out.println("\n<<<EL PARTICIPANTE YA ESTÁ EN EL EVENTO>>>\n");
-                return;
-            }
+        if (existeParticipanteEnEvento(participante, evento)) {
+            System.out.println("\n<<<PARTICIPANTE YA EXISTEN EN EL EVENTO>>>\n");
+            return;
         }
 
         // registrar participant (el evento no lleva listas de sus participantes)
@@ -90,8 +128,9 @@ public class ParticipanteServiceImpl implements ParticipanteService {
         return false;
     }
 
+    @Override
     /** Solicita, busca y devuelve un participante del total */
-    private Participante buscarParticipante() {
+    public Participante buscarParticipante() {
         System.out.print("Ingrese el DNI del participante: ");
         int dni = sc.nextInt();
         sc.nextLine();
@@ -102,5 +141,29 @@ public class ParticipanteServiceImpl implements ParticipanteService {
             }
         }
         return null;
+    }
+
+    /** comprobar si el participante ya está en ese evento */
+    private boolean existeParticipanteEnEvento(Participante participante, Evento evento) {
+
+        for (Evento eventoEnHistorial : participante.getEventosHistorial()) {
+            if (eventoEnHistorial.equals(evento)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /** Verifica si un participante hizo una reseña a un evento */
+    private boolean yaExisteReseña(Evento evento, Participante participante) {
+
+        for (Reseña reseña : reseñas) {
+            if (reseña.getEvento().equals(evento) && reseña.getParticipante().equals(participante)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

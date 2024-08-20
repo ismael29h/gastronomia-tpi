@@ -35,10 +35,6 @@ public class MenuServiceImpl implements MenuService {
             System.out.println("2. Gestión de participantes");
             System.out.println("3. Gestion de eventos");
             System.out.println("4. <Salir de la aplicación>");
-
-            // pruebas
-            System.out.println("9.......");
-
             System.out.print("> ");
 
             opc = sc.nextInt();
@@ -56,10 +52,6 @@ public class MenuServiceImpl implements MenuService {
                     break;
                 case 4:
                     System.out.println("\n<<<APLICACION FINALIZADA>>>");
-                    break;
-                case 9:
-                    // PRUEBAS
-                    participanteService.nuevoParticipante();
                     break;
                 default:
                     System.out.println("\n<<<OPCION INCORRECTA>>>");
@@ -94,6 +86,7 @@ public class MenuServiceImpl implements MenuService {
                     break;
                 case 3:
                     eventoService.exportEventosLlenos(FechaService.solicitarFecha(sc));
+                    eventoService.cerrarWriter();
                     break;
                 case 4:
                     System.out.println("\n<<<SALIENDO DE GESTION DE EVENTOS>>>");
@@ -144,7 +137,8 @@ public class MenuServiceImpl implements MenuService {
             System.out.println("<<<MENU DE GESTION DE PARTICIPANTES>>>\n");
             System.out.println("1. Nuevo participante en la organización");
             System.out.println("2. Asignar un participante a un evento");
-            System.out.println("3. <Volver hacia atrás>");
+            System.out.println("3. Un participante deja una reseña");
+            System.out.println("4. <Volver hacia atrás>");
             System.out.print("> ");
 
             opc = sc.nextInt();
@@ -158,13 +152,16 @@ public class MenuServiceImpl implements MenuService {
                     participanteService.inscribirParticipante(eventoService.buscarEvento());
                     break;
                 case 3:
+                    participanteService.crearReseña(eventoService.buscarEvento());
+                    break;
+                case 4:
                     System.out.println("\n<<<SALIENDO DE GESTION DE PARTICIPANTES>>>");
                     break;
                 default:
                     System.out.println("\n<<<OPCION INCORRECTA>>>");
                     break;
             }
-        } while (opc != 3);
+        } while (opc != 4);
     }
 
 }
