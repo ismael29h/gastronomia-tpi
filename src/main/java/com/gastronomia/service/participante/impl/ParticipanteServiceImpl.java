@@ -16,14 +16,18 @@ public class ParticipanteServiceImpl implements ParticipanteService {
     private List<Reseña> reseñas;
     private Scanner sc;
 
+    // Constructor
     public ParticipanteServiceImpl(Scanner sc) {
         this.sc = sc;
         this.participantes = new ArrayList<Participante>();
         this.reseñas = new ArrayList<Reseña>();
     }
 
+    // Métodos
     @Override
+    /** Un participante crea una reseña para un evento */
     public void crearReseña(Evento evento) {
+        // comprobaciones
         if (evento == null) {
             System.out.println("\n<<<NO EXISTE EL EVENTO>>>\n");
             return;
@@ -42,11 +46,12 @@ public class ParticipanteServiceImpl implements ParticipanteService {
         }
 
         if (yaExisteReseña(evento, participante)) {
-            System.out.println("\n<<<YA EXISTE UNA RESEÑA CON ESE PARTICIPANTE Y EVENTO>>>\n");
+            System.out.println("\n<<<YA EXISTE RESEÑA DEL EVENTO POR PARTE DEL PARTICIPANTE>>>\n");
             return;
         }
+        // fin de comprobaciones
 
-        CalificacionEnum calificacion = CalificacionEnum.elegircalificacion(sc);
+        CalificacionEnum calificacion = CalificacionEnum.elegirCalificacion(sc);
 
         if (calificacion == null) {
             calificacion = CalificacionEnum.TRES_ESTRELLAS;// valor por defecto
@@ -55,22 +60,22 @@ public class ParticipanteServiceImpl implements ParticipanteService {
         System.out.print("<Escriba un comentario a continuación>\n> ");
 
         String comentario = sc.nextLine();
-        sc.nextLine();
 
-        Reseña reseña = new Reseña(evento, participante, calificacion, comentario);
-
-        reseñas.add(reseña);
+        // agregado a la lista
+        reseñas.add(new Reseña(evento, participante, calificacion, comentario));
 
         System.out.println("\n<<<RESEÑA CREADA CON EXITO>>>\n");
     }
 
     @Override
+    /** Inscribe a un participante a un evento */
     public void inscribirParticipante(Evento evento) {
+        // comprobaciones
         if (evento == null) {
             System.out.println("\n<<<NO EXISTE EL EVENTO>>>\n");
             return;
         }
-        // comprobar si el evento sobrepasó sus límites
+
         if (evento.getNumParticipantes() >= evento.getCapacidad()) {
             System.out.println("\n<<<EVENTO LLENO>>>\n");
             return;
@@ -87,9 +92,9 @@ public class ParticipanteServiceImpl implements ParticipanteService {
             return;
         }
 
-        // registrar participant (el evento no lleva listas de sus participantes)
+        // registrar participante (el evento no lleva listas de sus participantes)
         participante.getEventosHistorial().add(evento);
-        evento.incNumParticipantes();
+        evento.incNumParticipantes();// +1 participante acude al evento
 
         System.out.println("\n<<<EL PARTICIPANTE RECIBE SU INVITACIÓN AL EVENTO>>>\n");
 
@@ -101,13 +106,17 @@ public class ParticipanteServiceImpl implements ParticipanteService {
         System.out.println("----------------------------------------------------------");
         System.out.println("<<<NUEVO PARTICIPANTE>>>\n");
 
-        System.out.println("Ingrese el DNI del participante: ");
+        System.out.print("Ingrese el DNI del participante: ");
         int dni = sc.nextInt();
         sc.nextLine();
 
-        System.out.println("Ingrese el nombre y apellido del participante: ");
+        if (existeParticipante(dni)) {
+            System.out.println("\n<<<YA EXISTE EL PARTICIPANTE>>>\n");
+            return;
+        }
+
+        System.out.print("Ingrese el nombre y apellido del participante: ");
         String nombre = sc.nextLine();
-        sc.nextLine();
 
         List<ComidaEnum> intereses = new ArrayList<>();
         ComidaEnum.elegirIntereses(intereses, sc);
@@ -118,19 +127,8 @@ public class ParticipanteServiceImpl implements ParticipanteService {
 
     }
 
-    /** Comprueba si existe un participante según su dni */
-    private boolean existeParticipante(int dni) {
-        for (Participante participante : participantes) {
-            if (participante.getDni() == dni) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    @Override
     /** Solicita, busca y devuelve un participante del total */
-    public Participante buscarParticipante() {
+    private Participante buscarParticipante() {
         System.out.print("Ingrese el DNI del participante: ");
         int dni = sc.nextInt();
         sc.nextLine();
@@ -164,6 +162,16 @@ public class ParticipanteServiceImpl implements ParticipanteService {
             }
         }
 
+        return false;
+    }
+
+    /** Comprueba si existe un participante según su dni */
+    private boolean existeParticipante(int dni) {
+        for (Participante participante : participantes) {
+            if (participante.getDni() == dni) {
+                return true;
+            }
+        }
         return false;
     }
 }

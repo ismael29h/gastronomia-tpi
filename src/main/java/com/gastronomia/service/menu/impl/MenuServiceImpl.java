@@ -1,5 +1,6 @@
 package com.gastronomia.service.menu.impl;
 
+import java.time.LocalDateTime;
 import java.util.Scanner;
 
 import com.gastronomia.service.chef.ChefService;
@@ -14,6 +15,7 @@ public class MenuServiceImpl implements MenuService {
     private ParticipanteService participanteService;
     private Scanner sc;
 
+    // Constructor
     public MenuServiceImpl(EventoService eventoService, ChefService chefService,
             ParticipanteService participanteService, Scanner sc) {
         this.eventoService = eventoService;
@@ -22,11 +24,14 @@ public class MenuServiceImpl implements MenuService {
         this.sc = sc;
     }
 
+    // Métodos
     @Override
+    /** Menú principal de la aplicación */
     public void mostrarMenu() {
         int opc;
         System.out.println("----------------------------------------------------------");
-        System.out.println("<<<APLICACION INICIADA>>>");
+        System.out.println("<<<APLICACION INICIADA>>>\n");
+        System.out.println(FechaService.mostrarFechaYHora(LocalDateTime.now()));
 
         do {
             System.out.println("----------------------------------------------------------");
@@ -62,7 +67,7 @@ public class MenuServiceImpl implements MenuService {
 
     }
 
-    /** GESTIONAR EVENTOS */
+    /** Menú para gestionar eventos */
     private void gestionEvento() {
         int opc;
         do {
@@ -86,7 +91,6 @@ public class MenuServiceImpl implements MenuService {
                     break;
                 case 3:
                     eventoService.exportEventosLlenos(FechaService.solicitarFecha(sc));
-                    eventoService.cerrarWriter();
                     break;
                 case 4:
                     System.out.println("\n<<<SALIENDO DE GESTION DE EVENTOS>>>");
@@ -98,7 +102,7 @@ public class MenuServiceImpl implements MenuService {
         } while (opc != 4);
     }
 
-    /** GESTIONAR CHEFS */
+    /** Menú para gestionar chefs */
     private void gestionChef() {
         int opc;
         do {
@@ -129,7 +133,7 @@ public class MenuServiceImpl implements MenuService {
         } while (opc != 3);
     }
 
-    /** GESTIONAR PARTICIPANTES */
+    /** Menú para gestionar participantes */
     private void gestionParticipante() {
         int opc;
         do {

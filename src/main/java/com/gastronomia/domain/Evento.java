@@ -22,6 +22,7 @@ public class Evento {
         this.ubicacion = ubicacion;
         this.capacidad = capacidad;
         this.chefACargo = null;
+        this.numParticipantes = 0;
     }
 
     // getters&setters
@@ -99,11 +100,11 @@ public class Evento {
         StringBuilder sb = new StringBuilder();
 
         String chefString;
-        if (chefACargo != null) {
-            chefString = "-> A cargo del evento: " + chefACargo.getNombre() + "(DNI: " + chefACargo.getDni()
-                    + ")\n";
+        if (chefACargo == null) {
+            chefString = "-> (Ningún chef a cargo)\n";
         } else {
-            chefString = "";
+            chefString = "-> A cargo del evento: " + chefACargo.getNombre()
+                    + " (DNI: " + chefACargo.getDni() + ")\n";
         }
 
         return sb.append("----------------------------------------------------------\n")
@@ -119,9 +120,8 @@ public class Evento {
                         + fechaYHora.getYear() + "\n")
                 .append("-> Hora: "
                         + fechaYHora.getHour() + ":"
-                        + fechaYHora.getMinute())
-                + "\n"
-                        .toString();
+                        + fechaYHora.getMinute() + "\n")
+                .toString();
     }
 
     @Override

@@ -22,6 +22,11 @@ public class ChefServiceImpl implements ChefService {
     @Override
     /** Asigna un chef a un evento */
     public void asignarChef(Evento evento) {
+        if (evento == null) {
+            System.out.println("\n<<<NO EXISTE EL EVENTO>>>\n");
+            return;
+        }
+
         Chef chef = buscarChef();
 
         if (chef == null) {
@@ -34,6 +39,7 @@ public class ChefServiceImpl implements ChefService {
         }
 
         evento.setChefACargo(chef);
+        chef.getEventosACargo().add(evento);
         System.out.println("\n<<<CHEF ASIGNADO AL EVENTO CON EXITO>>>\n");
 
     }
@@ -44,7 +50,7 @@ public class ChefServiceImpl implements ChefService {
         System.out.println("----------------------------------------------------------");
         System.out.println("<<<NUEVO CHEF>>>\n");
 
-        System.out.println("Ingrese el DNI del chef: ");
+        System.out.print("Ingrese el DNI del chef: ");
         int dni = sc.nextInt();
         sc.nextLine();
 
@@ -53,12 +59,10 @@ public class ChefServiceImpl implements ChefService {
             System.out.println("\n<<<CHEF YA EXISTE>>>\n");
         }
 
-        System.out.println("Ingrese el nombre y apellido del chef: ");
+        System.out.print("Ingrese el nombre y apellido del chef: ");
         String nombre = sc.nextLine();
-        sc.nextLine();
 
-        System.out.println("Ingrese la especialidad del chef: ");
-        EspecialidadEnum especialidad = EspecialidadEnum.elegirEspecialidad(sc);
+        EspecialidadEnum especialidad = EspecialidadEnum.elegirEspecialidad(sc); // puede ser null
 
         chefs.add(new Chef(dni, nombre, especialidad));
 

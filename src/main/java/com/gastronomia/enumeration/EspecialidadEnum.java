@@ -6,7 +6,7 @@ public enum EspecialidadEnum {
     PASTELERIA,
     COCINA_INTERNACIONAL;
 
-    /** Devuelve una especialidad para el chef */
+    /** Devuelve una especialidad */
     public static EspecialidadEnum elegirEspecialidad(Scanner sc) {
         int opc;
         System.out.println("<Elije una especialidad>");

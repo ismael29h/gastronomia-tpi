@@ -12,7 +12,4 @@ public interface EventoService {
     public void listarEventos(LocalDate fecha);
 
     public void exportEventosLlenos(LocalDate fecha);
-
-    public void cerrarWriter();
-
 }

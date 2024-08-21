@@ -17,36 +17,43 @@ import com.opencsv.CSVWriter;
 public class EventoServiceImpl implements EventoService {
     private List<Evento> eventos;
     private Scanner sc;
-    private final String RUTA_RECURSOS = "\\src\\main\\java\\com\\gastronomia\\resource\\";
-    CSVWriter csvWriter = null;
 
+    // Constructor
     public EventoServiceImpl(Scanner sc) {
         this.sc = sc;
         this.eventos = new ArrayList<Evento>();
     }
 
+    // Métodos
     @Override
+    /** Crear evento nuevo */
     public void crearEvento() {
         System.out.println("----------------------------------------------------------");
         System.out.println("<<<CREACION DE EVENTO>>>\n");
 
         System.out.print("Escriba el nombre para el evento: ");
         String nombre = sc.nextLine();
-        sc.nextLine();
 
         System.out.print("Escriba una descripcion: ");
         String descripcion = sc.nextLine();
-        sc.nextLine();
 
         LocalDateTime fechaYHora = FechaService.solicitarFechaYHora(sc);
 
+        if (!FechaService.comprobarFecha(fechaYHora)) {
+            System.out.println("\n<<LA FECHA y HORA HA PASADO>>\n");
+            return;
+        }
+
         System.out.print("Escriba la ubicación del evento: ");
         String ubicacion = sc.nextLine();
-        sc.nextLine();
 
         System.out.print("Escriba la capacidad máxima del evento: ");
         int capacidad = sc.nextInt();
         sc.nextLine();
+
+        if (capacidad < 1) {
+            capacidad = 1; // min por defecto
+        }
 
         Evento evento = new Evento(nombre, descripcion, fechaYHora, ubicacion, capacidad);
 
@@ -58,12 +65,29 @@ public class EventoServiceImpl implements EventoService {
     }
 
     @Override
-
+    /** Exporta los eventos que están llenos en un archivo .csv */
     public void exportEventosLlenos(LocalDate fecha) {
+        final String RUTA_RECURSOS = "\\src\\main\\java\\com\\gastronomia\\resource\\";
+        CSVWriter csvWriter = null;
+
+        // comprobaciones
         boolean noHayEventosLlenos = true;
 
-        String rutaArchivo = System.getProperty("user.dir") + RUTA_RECURSOS + "EventosLlenos ("
-                + FechaService.mostrarFecha(fecha) + ").csv";
+        for (Evento evento : eventos) {
+            if (FechaService.esMismaFecha(fecha, evento.getFechaYHora()) && eventoEstaLleno(evento)) {
+                noHayEventosLlenos = false;// hay uno
+                break;
+            }
+        }
+
+        if (noHayEventosLlenos) {
+            System.out.println("\n<<<NO HAY EVENTOS QUE ESTÉN LLENOS>>>");
+            return;
+        }
+
+        // se procede...
+        String rutaArchivo = System.getProperty("user.dir") + RUTA_RECURSOS
+                + "EventosLlenos (" + FechaService.mostrarFecha(fecha) + ").csv";
 
         try {
             csvWriter = new CSVWriter(new FileWriter(rutaArchivo));
@@ -74,7 +98,7 @@ public class EventoServiceImpl implements EventoService {
             csvWriter.writeNext(encabezado);
 
             for (Evento evento : eventos) {
-                if (eventoEstaLleno(evento)) {
+                if (FechaService.esMismaFecha(fecha, evento.getFechaYHora()) && eventoEstaLleno(evento)) {
                     String[] datosDelEvento = {
                             evento.getId().toString(),
                             evento.getNombre(),
@@ -82,77 +106,78 @@ public class EventoServiceImpl implements EventoService {
                             evento.getUbicacion(),
                             evento.getChefACargo() != null ? evento.getChefACargo().getNombre() : "(Sin chef)",
                             FechaService.mostrarFechaYHora(evento.getFechaYHora()),
-                            "" + evento.getCapacidad()
+                            "" + evento.getCapacidad() // cast a string
                     };
                     csvWriter.writeNext(datosDelEvento);
-                    noHayEventosLlenos = false; // al menos uno
+
                 }
             }
-            if (noHayEventosLlenos) {
-                System.out.println("\n<<<NO HAY EVENTOS QUE ESTÉN LLENOS>>>");
-            } else {
-                System.out.println("\n<<<SE HA GUARDADO EL ARCHIVO>>>\n");
-            }
+            System.out.println("\n<<<SE HA GUARDADO EL ARCHIVO>>>\n");
 
         } catch (IOException e) {
             System.out.println("ERROR: " + e.getMessage());
+        } finally {
+            try {
+                csvWriter.close();
+            } catch (IOException e) {
+                System.out.println("No se pudo guardar el archivo: " + e.getMessage());
+            }
         }
 
     }
 
-    /** Da una lista de evento en una fecha determinada */
     @Override
+    /** Da una lista de evento en una fecha determinada */
     public void listarEventos(LocalDate fecha) {
+        // comprobar
         boolean noHayEventos = true;
-
-        System.out.println("Buscando eventos...\n");
         for (Evento evento : eventos) {
             if (FechaService.esMismaFecha(fecha, evento.getFechaYHora())) {
-                System.out.println(evento.toString());
-                noHayEventos = false;
+                noHayEventos = false;// hay uno
+                break;
             }
         }
 
         if (noHayEventos) {
             System.out.println("\n<<<NO HAY EVENTOS EN LA FECHA INDICADA>>>\n");
+            return;
         }
-    }
 
-    private boolean existeEvento(UUID id) {
+        // se procede
+        System.out.println("\n<<MOSTRANDO EVENTOS>>\n");
         for (Evento evento : eventos) {
-            if (evento.getId().equals(id)) {
-                return true;
+            if (FechaService.esMismaFecha(fecha, evento.getFechaYHora())) {
+                System.out.println(evento.toString());
             }
         }
-        return false;
     }
 
     @Override
     /** Busca y devuelve un evento a partir de su ID */
     public Evento buscarEvento() {
+        UUID id;
+
         System.out.print("Ingrese el ID del evento: ");
-        UUID id = UUID.fromString(sc.nextLine());
+
+        try {
+            id = UUID.fromString(sc.nextLine());
+        } catch (IllegalArgumentException e) {
+            // debe poder convertirse en UUID
+            System.out.println("\nFormato incorrecto: " + e.getMessage());
+            return null;
+        }
 
         for (Evento evento : eventos) {
             if (evento.getId().equals(id)) {
                 return evento;
             }
         }
-
         return null;
     }
 
+    /** Señala si un evento está a su máxima capacidad */
     private boolean eventoEstaLleno(Evento evento) {
+        // aunque no se espera que haya más participantes del permitido
         return evento.getNumParticipantes() >= evento.getCapacidad();
-    }
-
-    public void cerrarWriter() {
-        if (csvWriter != null) {
-            try {
-                csvWriter.close();
-            } catch (IOException e) {
-                System.out.println("ERROR: " + e.getMessage());
-            }
-        }
     }
 }

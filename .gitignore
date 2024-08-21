@@ -3,3 +3,4 @@ Notas.txt
 .vscode/
 target/
 *.class
+test/

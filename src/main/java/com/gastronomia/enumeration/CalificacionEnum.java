@@ -9,7 +9,7 @@ public enum CalificacionEnum {
     CUATRO_ESTRELLAS,
     CINCO_ESTRELLAS;
 
-    public static CalificacionEnum elegircalificacion(Scanner sc) {
+    public static CalificacionEnum elegirCalificacion(Scanner sc) {
         int opc;
         System.out.println("<Elije una calificación>");
         System.out.println("1. Una estrella *");

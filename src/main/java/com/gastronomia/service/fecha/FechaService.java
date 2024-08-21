@@ -6,6 +6,20 @@ import java.time.LocalTime;
 import java.util.Scanner;
 
 public class FechaService {
+    /** Comprueba que una fecha no haya pasado (sin contar minutos) */
+    public static boolean comprobarFecha(LocalDateTime fechaYHora) {
+        LocalDateTime fActual = LocalDateTime.now();
+
+        if (fActual.toLocalDate().isBefore(fechaYHora.toLocalDate())) {
+            return true;
+        } else if (fActual.toLocalDate().isEqual(fechaYHora.toLocalDate())
+                && fActual.getHour() <= fechaYHora.getHour()) {
+            return true;
+        }
+
+        return false;
+    }
+
     /** Devuelve un String con la fecha especificada */
     public static String mostrarFecha(LocalDate fechaYHora) {
         StringBuilder sb = new StringBuilder();

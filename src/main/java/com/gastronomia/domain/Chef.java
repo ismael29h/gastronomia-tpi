@@ -1,5 +1,6 @@
 package com.gastronomia.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.gastronomia.enumeration.EspecialidadEnum;
@@ -15,6 +16,7 @@ public class Chef {
         this.dni = dni;
         this.nombre = nombre;
         this.especialidad = especialidad;
+        this.eventosACargo = new ArrayList<Evento>();
     }
 
     // getters&setters
